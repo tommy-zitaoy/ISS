@@ -4,36 +4,28 @@ import sensors.HumiditySensor;
 import sensors.TemperatureSensor;
 import sensors.WindDirectionSensor;
 import sensors.WindSpeedSensor;
+import sensors.IntegratedSensorSuite;
 
 public class DriverMain {
 
 	public static void main(String[] args) {
-		
-		long startTime = System.currentTimeMillis();
 		TemperatureSensor temp = new TemperatureSensor();
 		WindSpeedSensor windSpeed = new WindSpeedSensor();
 		HumiditySensor humidity = new HumiditySensor();
 		WindDirectionSensor windDirection = new WindDirectionSensor();
+		IntegratedSensorSuite ISS = new IntegratedSensorSuite(temp, windSpeed, windDirection, humidity);
+		int counter = 0;
 		
-		System.out.println("----Console Receiver Output----");
-		temp.start();
-		windSpeed.start();
-		humidity.start();
-		windDirection.start();
-		
-		
-		while(System.currentTimeMillis() - startTime < 100000) {
-		try {
-			System.out.println("----Console Receiver Output----");
-			Thread.sleep(5000);
-			temp.join();
-			windSpeed.join();
-			humidity.join();
-			windDirection.join();
-		} catch(InterruptedException e) {
-			e.printStackTrace();
-		}
+		while(counter < 1000) {
+			
+			try {
+				ISS.run();
+				Thread.sleep(2500);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			counter++;
 		}
 	}
-
 }
