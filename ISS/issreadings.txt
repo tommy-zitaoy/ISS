@@ -1,0 +1,84 @@
+----Console Receiver Output----
+Temperature(F): 60
+Wind Speed(MPH) : 12
+Wind Direction(Cardinal): North
+Humidity: 35%
+
+----Console Receiver Output----
+Temperature(F): 60
+Wind Speed(MPH) : 59
+Wind Direction(Cardinal): North
+Humidity: 35%
+
+----Console Receiver Output----
+Temperature(F): 60
+Wind Speed(MPH) : 37
+Wind Direction(Cardinal): NorthEast
+Humidity: 34%
+
+----Console Receiver Output----
+Temperature(F): 60
+Wind Speed(MPH) : 9
+Wind Direction(Cardinal): SouthEast
+Humidity: 34%
+
+----Console Receiver Output----
+Temperature(F): 60
+Wind Speed(MPH) : 114
+Wind Direction(Cardinal): SouthEast
+Humidity: 35%
+
+----Console Receiver Output----
+Temperature(F): 60
+Wind Speed(MPH) : 122
+Wind Direction(Cardinal): South
+Humidity: 34%
+
+----Console Receiver Output----
+Temperature(F): 60
+Wind Speed(MPH) : 140
+Wind Direction(Cardinal): SouthEast
+Humidity: 33%
+
+----Console Receiver Output----
+Temperature(F): 60
+Wind Speed(MPH) : 52
+Wind Direction(Cardinal): SouthWest
+Humidity: 34%
+
+----Console Receiver Output----
+Temperature(F): 60
+Wind Speed(MPH) : 151
+Wind Direction(Cardinal): NorthEast
+Humidity: 33%
+
+----Console Receiver Output----
+Temperature(F): 60
+Wind Speed(MPH) : 155
+Wind Direction(Cardinal): NorthEast
+Humidity: 32%
+
+----Console Receiver Output----
+Temperature(F): 60
+Wind Speed(MPH) : 113
+Wind Direction(Cardinal): North
+Humidity: 32%
+
+----Console Receiver Output----
+Temperature(F): 60
+Wind Speed(MPH) : 155
+Wind Direction(Cardinal): East
+Humidity: 31%
+
+----Console Receiver Output----
+Temperature(F): 60
+Wind Speed(MPH) : 128
+Wind Direction(Cardinal): NorthEast
+Humidity: 31%
+
+----Console Receiver Output----
+Temperature(F): 60
+Wind Speed(MPH) : 30
+Wind Direction(Cardinal): West
+Humidity: 31%
+

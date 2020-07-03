@@ -1,54 +1,58 @@
 package sensors;
+
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Executor;
-import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 
+/**
+ * IntegratedSensorSuite is a control for all of the sensors, it makes them
+ * each a Callable object and executes them concurrently while storing the results
+ * in a future object. When all are complete, it outputs them to the console as well
+ * as to a text file for archival use.
+ * @author Group 5
+ *
+ */
 public class IntegratedSensorSuite {
-	TemperatureSensor tempSensor;
-	WindSpeedSensor windSpeedSensor;
-	WindDirectionSensor windDirectionSensor;
-	HumiditySensor humiditySensor;
+	
+	/*
+	 * Executor to control the various sensor threads.
+	 */
 	ScheduledExecutorService executor;
-	Callable<String> headerCon;
-	Callable<String> callable1;
-	Callable<String> callable2;
-	Callable<String> callable3;
-	Callable<String> callable4;
-	Callable<String> callable5;
+	
+	//All of the sensors as Callable objects
+	Callable<String> tempSensor = new TemperatureSensor();
+	Callable<String> speedSensor = new WindSpeedSensor();
+	Callable<String> dirSensor = new WindDirectionSensor();
+	Callable<String> humiditySensor = new HumiditySensor();
+	Callable<String >headerCon = () -> { return ("----Console Receiver Output----");};
+	
+	//PrintStream object for archiving data.
+	FileWriter out;
 	
 	
-	public IntegratedSensorSuite(TemperatureSensor theTemp, WindSpeedSensor theWindSpeed, 
-			WindDirectionSensor theWindDir, HumiditySensor theHumidity) {
+	public IntegratedSensorSuite() {
 		executor = Executors.newScheduledThreadPool(5);
-		tempSensor = theTemp;
-		tempSensor.setTemp(60);
-		windSpeedSensor = theWindSpeed;
-		windDirectionSensor = theWindDir;
-		humiditySensor = theHumidity;
-		humiditySensor.setHumidity(47);
-		headerCon = () -> { return ("----Console Receiver Output----");};
-		callable1 = tempSensor;
-		callable2 = windSpeedSensor;
-		callable3 = windDirectionSensor;
-		callable4 = humiditySensor;
-		callable5 = headerCon;
-
+		try {
+			out = new FileWriter(".//issreadings.txt", true);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
-	public void run() {
+	public List<String> run() {
 		List<Future<String>> list = new ArrayList<>();
-		Future<String> header = executor.submit(callable5);
-		Future<String> temp = executor.submit(callable1);
-		Future<String> speed = executor.submit(callable2);
-		Future<String> dir = executor.submit(callable3);
-		Future<String> humidity = executor.submit(callable4);
+		Future<String> header = executor.submit(headerCon);
+		Future<String> temp = executor.submit(tempSensor);
+		Future<String> speed = executor.submit(speedSensor);
+		Future<String> dir = executor.submit(dirSensor);
+		Future<String> humidity = executor.submit(humiditySensor);
 		Callable<String> newLine = () -> {return "";};
 		Future<String> nl = executor.submit(newLine);
 		
@@ -58,18 +62,19 @@ public class IntegratedSensorSuite {
 		list.add(dir);
 		list.add(humidity);
 		list.add(nl);;
+		
+		List<String> consoleOutList = new LinkedList<>();
 		for(Future<String> future : list) {
 			try {
-				System.out.println(future.get());
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (ExecutionException e) {
+				String reading = future.get();
+				consoleOutList.add(reading);
+				out.append(reading);
+			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
-//		Future<String> newLine = executor.submit(() -> {System.out.println();});
+		return consoleOutList;
 	}
 	
 	

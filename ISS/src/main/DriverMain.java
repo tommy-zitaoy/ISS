@@ -1,26 +1,29 @@
 package main;
 
-import sensors.HumiditySensor;
-import sensors.TemperatureSensor;
-import sensors.WindDirectionSensor;
-import sensors.WindSpeedSensor;
+import java.util.List;
 import sensors.IntegratedSensorSuite;
+import sensors.Sensor;
 
+/**
+ * Driver class, creates the sensors and then "attaches" them to the Integrated Sensor Suite.
+ * Polls the sensor every 3 seconds, which can be changed by modifying the class constant in Sensor.
+ * As a demonstration, it currently takes readings 1000 times.
+ * @author Group 5
+ *
+ */
 public class DriverMain {
 
 	public static void main(String[] args) {
-		TemperatureSensor temp = new TemperatureSensor();
-		WindSpeedSensor windSpeed = new WindSpeedSensor();
-		HumiditySensor humidity = new HumiditySensor();
-		WindDirectionSensor windDirection = new WindDirectionSensor();
-		IntegratedSensorSuite ISS = new IntegratedSensorSuite(temp, windSpeed, windDirection, humidity);
+		IntegratedSensorSuite ISS = new IntegratedSensorSuite();
 		int counter = 0;
 		
 		while(counter < 1000) {
-			
 			try {
-				ISS.run();
-				Thread.sleep(2500);
+				List<String> readings = ISS.run();
+				for(String reading : readings) {
+					System.out.println(reading);
+				}
+				Thread.sleep(Sensor.INTERVAL);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

@@ -1,13 +1,18 @@
 package sensors;
 
-import java.util.concurrent.Callable;
-
-public class WindDirectionSensor extends Thread implements Callable<String> {
+/**
+ * Wind Direction Sensor gets a random number between 0 and 360
+ * and then assigns it to a compass direction such as NW, SE, etc..
+ * @author Group 5
+ *
+ */
+public class WindDirectionSensor implements Sensor {
 
 	public int getData() {
 		return Sensor.rand.nextInt(361);
 	}
 	
+	//Calls the Callable superclass inherited from Sensor
 	public WindDirectionSensor() {
 		super();
 	}
@@ -43,10 +48,6 @@ public class WindDirectionSensor extends Thread implements Callable<String> {
 		}
 		
 		return cardinalPoint;
-	}
-	
-	public synchronized void run() {
-		System.out.println("Wind Direction(Cardinal): " + getDirection());
 	}
 
 	@Override

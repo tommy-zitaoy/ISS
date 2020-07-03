@@ -1,8 +1,11 @@
 package sensors;
 
-import java.util.concurrent.Callable;
-
-public class WindSpeedSensor extends Thread implements Callable<String> {
+/**
+ * Wind speed sensor, maximum speed is 160
+ * @author Group 5
+ *
+ */
+public class WindSpeedSensor implements Sensor {
 
 	public int getData() {
 		return Sensor.rand.nextInt(160); 
