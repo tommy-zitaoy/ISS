@@ -18,38 +18,47 @@ public class WindDirectionSensor implements Sensor {
 	}
 	
 	public String getDirection() {
-		int direction = getData();
-		String cardinalPoint = "North";
-		
-		//Hyeong: hard-coded for now, not a brilliant solution but it does the job 
-		if(direction >= 337.5 && direction <= 22.49) {
-			cardinalPoint = "North";
-			
-		} else if (direction >= 22.5 && direction <= 67.49) {
-			cardinalPoint = "NorthEast";
-			
-		} else if (direction >= 67.5 && direction <= 112.49) {
-			cardinalPoint = "East";
-			
-		} else if (direction >= 112.5 && direction <= 157.49) {
-			cardinalPoint = "SouthEast";
-			
-		} else if (direction >= 157.5 && direction <= 202.49) {
-			cardinalPoint = "South";
-			
-		} else if (direction >= 202.5 && direction <= 247.49) {
-			cardinalPoint = "SouthWest";
-			
-		} else if (direction >= 247.5 && direction <= 292.49) {
-			cardinalPoint = "West";
-			
-		} else if (direction >= 292.5 && direction <= 337.49) {
-			cardinalPoint = "NorthWest";
+		double direction = getData();
+		// check if direction is less than 360, because 360 is max
+		// if not round it to 2 decimal
+		if (direction < 360) {
+			direction += rand.nextDouble();
+			direction = Math.round(direction * 100.0) / 100.0;
 		}
-		
-		return cardinalPoint;
-	}
 
+		return determineDirection(direction);
+	}
+	
+	public String determineDirection(double theValue) {
+		if(theValue >= 337.5) {
+			return "North";
+			
+		} else if (theValue <= 22.49) {
+			return "North";
+					
+		}else if (theValue <= 67.49) {
+			return "NorthEast";
+			
+		} else if (theValue <= 112.49) {
+			return "East";
+			
+		} else if (theValue <= 157.49) {
+			return "SouthEast";
+			
+		} else if (theValue <= 202.49) {
+			return "South";
+			
+		} else if (theValue <= 247.49) {
+			return "SouthWest";
+			
+		} else if (theValue <= 292.49) {
+			return "West";
+			
+		} else{
+			return "NorthWest";
+		}
+	}
+	
 	@Override
 	public String call() throws Exception {
 		return "Wind Direction(Cardinal): " + getDirection();
