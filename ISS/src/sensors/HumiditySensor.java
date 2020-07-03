@@ -1,14 +1,20 @@
 package sensors;
 
-import java.util.concurrent.Callable;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class HumiditySensor extends Thread implements Callable<String> {
+/**
+ * Humidity sensor, has validation checks to ensure that the humidity falls into a
+ * realistic range
+ * @author Group 5
+ *
+ */
+public class HumiditySensor implements Sensor {
 	
 	private int myHumidity;
 	
 	public HumiditySensor() {
 		super();
+		myHumidity = 35;
 	}
 	
 	public int getData() {
@@ -18,11 +24,7 @@ public class HumiditySensor extends Thread implements Callable<String> {
 	
 	public void setHumidity(final int theInput)
 	{
-		this.myHumidity = theInput;
-	}
-	
-	public synchronized void run() {
-		System.out.println("Humidity: " + getData() + "%");
+		this.myHumidity = (theInput >= 0 || theInput <= 100)  ? theInput : 35;
 	}
 
 	@Override
