@@ -1,18 +1,29 @@
 package sensors;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 /**
- * Wind speed sensor, maximum speed is 160
+ * Wind speed sensor, maximum speed is 200 according to specifications
  * @author Group 5
  *
  */
 public class WindSpeedSensor implements Sensor {
-
-	public int getData() {
-		return Sensor.rand.nextInt(160); 
-	}
+	
+	int myWindSpeed;
 	
 	public WindSpeedSensor() {
 		super();
+		myWindSpeed = rand.nextInt(200);
+	}
+	
+	public int getData() {
+		setWindSpeed(this.myWindSpeed + ThreadLocalRandom.current().nextInt(-10, 10));
+		return this.myWindSpeed; 
+	}
+	
+	public void setWindSpeed(final int theInput)
+	{
+		this.myWindSpeed = (theInput >= 0 || theInput <= 160) ? theInput : 25;
 	}
 
 	@Override

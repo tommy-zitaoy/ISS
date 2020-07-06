@@ -16,13 +16,13 @@ public class TemperatureSensor implements Sensor {
 	//Calls Callable superclass and defaults myTemp to 60
 	public TemperatureSensor() {
 		super();
-		myTemp = 60;
+		myTemp = rand.nextInt(191) - 40;
 	}
 	
 	//Check if the temp is valid, if so set temp, if not default to 60
 	public void setTemp(final int theInput)
 	{
-		this.myTemp = (theInput > 120 || theInput < -40) ? theInput : 60;
+		this.myTemp = (theInput < 150 || theInput >-40) ? theInput : 60;
 	}
 	
 	//Get the current temp and add/subtract a couple to it.

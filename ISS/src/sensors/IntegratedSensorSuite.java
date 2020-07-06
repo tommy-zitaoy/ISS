@@ -1,10 +1,13 @@
 package sensors;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Scanner;
 import java.util.concurrent.Callable;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
@@ -19,7 +22,6 @@ import java.util.concurrent.ScheduledExecutorService;
  *
  */
 public class IntegratedSensorSuite {
-	
 	/*
 	 * Executor to control the various sensor threads.
 	 */
@@ -30,14 +32,15 @@ public class IntegratedSensorSuite {
 	Callable<String> speedSensor = new WindSpeedSensor();
 	Callable<String> dirSensor = new WindDirectionSensor();
 	Callable<String> humiditySensor = new HumiditySensor();
-	Callable<String >headerCon = () -> { return ("----Console Receiver Output----");};
+	Callable<String> solarSensor = new SolarSensor();
+	Callable<String> headerCon = () -> { return ("----Console Receiver Output----");};
 	
-	//PrintStream object for archiving data.
+	//FileWriter object for archiving data.
 	FileWriter out;
 	
 	
 	public IntegratedSensorSuite() {
-		executor = Executors.newScheduledThreadPool(5);
+		executor = Executors.newScheduledThreadPool(7);
 		try {
 			out = new FileWriter(".//issreadings.txt", true);
 		} catch (IOException e) {
@@ -46,6 +49,11 @@ public class IntegratedSensorSuite {
 		}
 	}
 	
+	
+	/**
+	 * Creates Future objects and stores them to be returned and used by the driver (console display)
+	 * @return a list of readings from each sensor
+	 */
 	public List<String> run() {
 		List<Future<String>> list = new ArrayList<>();
 		Future<String> header = executor.submit(headerCon);
@@ -55,15 +63,21 @@ public class IntegratedSensorSuite {
 		Future<String> humidity = executor.submit(humiditySensor);
 		Callable<String> newLine = () -> {return "";};
 		Future<String> nl = executor.submit(newLine);
+		Future<String> solar = executor.submit(solarSensor);
 		
 		list.add(header);
 		list.add(temp);
 		list.add(speed);
 		list.add(dir);
 		list.add(humidity);
+		list.add(solar);
 		list.add(nl);;
 		
 		List<String> consoleOutList = new LinkedList<>();
+		
+		
+		//Add each threads reading to a output list and also send it to 
+		//archival text file.
 		for(Future<String> future : list) {
 			try {
 				String reading = future.get();
@@ -77,6 +91,21 @@ public class IntegratedSensorSuite {
 		return consoleOutList;
 	}
 	
-	
+	/**
+	 * Method for retrieving and displaying archival data
+	 */
+	public void accessArchives() {
+		Scanner fileIn = null;
+		try {
+			fileIn = new Scanner(new File(".\\issreadings.txt"));
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		while(fileIn.hasNext()) {
+			System.out.println(fileIn.nextLine());
+		}
+	}
 	
 }

@@ -14,7 +14,7 @@ public class HumiditySensor implements Sensor {
 	
 	public HumiditySensor() {
 		super();
-		myHumidity = 35;
+		myHumidity = rand.nextInt(100) + 1;
 	}
 	
 	public int getData() {

@@ -2,6 +2,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.util.List;
+import java.util.Queue;
 
 import org.junit.Test;
 
@@ -30,7 +31,7 @@ public class SensorTest {
         humidityData = humiditySensor.getData();
         //System.out.println(data);
         assertTrue("The humidity sensor's return value of " + humidityData + " was less than 1.",
-                1 >= humidityData);
+                1 <= humidityData);
         assertTrue("The humidity sensor's return value of " + humidityData + " was greater than 100.",
                 humidityData <= 100);
 
@@ -119,7 +120,7 @@ public class SensorTest {
     	sensorInfo = s.substring(0, 18);
     	data = Integer.parseInt(s.substring(18));
     	assertTrue(sensorInfo.equals("Wind Speed(MPH) : "));
-    	assertTrue(data >= 0 && data <= 160);
+    	assertTrue(data >= 0 && data <= 200);
     	
     	// test case for wind dir sensor call()
     	s = windDirectionSensor.call();
@@ -149,7 +150,7 @@ public class SensorTest {
     	assertTrue(tempData >= -40 && tempData <= 120);
     	
     	assertTrue(list.get(2).substring(0, 18).equals("Wind Speed(MPH) : "));
-    	assertTrue(windSpeedData >= 0 && windSpeedData <= 160);
+    	assertTrue(windSpeedData >= 0 && windSpeedData <= 200);
     	
     	assertTrue(list.get(3).substring(0, 26).equals("Wind Direction(Cardinal): "));
        	assertTrue(windDirection .equals("North") || windDirection .equals("South") 
