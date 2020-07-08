@@ -27,8 +27,8 @@ public class SensorTest {
     double windDirectionData;
 
     /**
-	 * Test getData() for humidity sensor
-	 */
+     * Test getData() for humidity sensor
+     */
     @Test
     public void testHumidityGetData() {
     	humiditySensor.setHumidity(-10);
@@ -44,8 +44,8 @@ public class SensorTest {
     }
     
     /**
-	 * Test getData() for temperature sensor
-	 */
+     * Test getData() for temperature sensor
+     */
     @Test
     public void testTemperatureGetData() {
     	tempSensor.setTemp(-60);
@@ -60,8 +60,8 @@ public class SensorTest {
     }
     
     /**
-	 * Test getData() for wind speed sensor
-	 */
+     * Test getData() for wind speed sensor
+     */
     @Test
     public void testWindSpeedGetData() {
         windSpeedData = windSpeedSensor.getData();
@@ -71,8 +71,8 @@ public class SensorTest {
     }
     
     /**
-	 * Test getData() for wind direction sensor
-	 */
+     * Test getData() for wind direction sensor
+     */
     @Test
     public void testWindDirectionGetData() {
         windDirectionData = windDirectionSensor.getData( );
@@ -84,8 +84,8 @@ public class SensorTest {
     }
     
     /**
-	 * Test wind direction
-	 */
+     * Test wind direction
+     */
     @Test
     public void testWindDirectionSensor() {
 
@@ -110,8 +110,8 @@ public class SensorTest {
     }
     
     /**
-	 * Test sensor type
-	 */
+     * Test sensor type
+     */
     @Test
     public void testSensorType() {
     	assertTrue(humiditySensor.sensorType().equals("HumiditySensor"));
@@ -120,8 +120,8 @@ public class SensorTest {
     	assertTrue(windDirectionSensor.sensorType().equals("WindDirectionSensor"));
     }
     /**
-	 * Test the output
-	 */
+     * Test call() for each sensor
+     */
     @Test
     public void testCall() throws Exception {
     	// test case for humidity sensor call()
@@ -159,8 +159,8 @@ public class SensorTest {
     			|| direction.equals("SouthWest") || direction.equals("NorthWest"));
     }
     /**
-	 * Test the output
-	 */
+     * Test the output
+     */
     @Test
     public void testRun() {
     	IntegratedSensorSuite iss = new IntegratedSensorSuite();
