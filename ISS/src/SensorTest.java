@@ -12,7 +12,10 @@ import sensors.TemperatureSensor;
 import sensors.WindDirectionSensor;
 import sensors.WindSpeedSensor;
 
-
+/**
+ * Test class for all sensors
+ *  @author Group 5
+ */
 public class SensorTest {
     final HumiditySensor humiditySensor = new HumiditySensor();
     final TemperatureSensor tempSensor = new TemperatureSensor();
@@ -23,6 +26,9 @@ public class SensorTest {
     int windSpeedData;
     double windDirectionData;
 
+    /**
+	 * Test getData() for humidity sensor
+	 */
     @Test
     public void testHumidityGetData() {
     	humiditySensor.setHumidity(-10);
@@ -36,6 +42,10 @@ public class SensorTest {
                 humidityData <= 100);
 
     }
+    
+    /**
+	 * Test getData() for temperature sensor
+	 */
     @Test
     public void testTemperatureGetData() {
     	tempSensor.setTemp(-60);
@@ -48,6 +58,10 @@ public class SensorTest {
         assertTrue("The temperature sensor's return value of " + windSpeedData + " was greater than 150.",
                 tempData <= 150);
     }
+    
+    /**
+	 * Test getData() for wind speed sensor
+	 */
     @Test
     public void testWindSpeedGetData() {
         windSpeedData = windSpeedSensor.getData();
@@ -55,6 +69,10 @@ public class SensorTest {
         assertTrue("The wind speed sensor's return value of " + windSpeedData + " was less than 0.",
                 windSpeedData > 0);
     }
+    
+    /**
+	 * Test getData() for wind direction sensor
+	 */
     @Test
     public void testWindDirectionGetData() {
         windDirectionData = windDirectionSensor.getData( );
@@ -64,6 +82,10 @@ public class SensorTest {
         assertTrue("The temperature sensor's return value of " + windDirectionData + " was greater than 360.",
                 windDirectionData <= 360);
     }
+    
+    /**
+	 * Test wind direction
+	 */
     @Test
     public void testWindDirectionSensor() {
 
@@ -72,11 +94,10 @@ public class SensorTest {
                 || s.equals("NorthEast") || s.equals("SouthEast") || s.equals("SouthWest") 
                 || s.equals("NorthWest"));
     	
-    	// last edit by Tommy 7/2
     	int num = windDirectionSensor.getData();
     	assertTrue(num >= 0 && num < 361);
     	
-    	// test determinDirection()
+    	// test determineDirection()
     	assertTrue(windDirectionSensor.determineDirection(0.0).equals("North"));
     	assertTrue(windDirectionSensor.determineDirection(360).equals("North"));
     	assertTrue(windDirectionSensor.determineDirection(40).equals("NorthEast"));
@@ -88,7 +109,9 @@ public class SensorTest {
     	assertTrue(windDirectionSensor.determineDirection(300).equals("NorthWest"));
     }
     
-    // last edit by Tommy 7/2
+    /**
+	 * Test sensor type
+	 */
     @Test
     public void testSensorType() {
     	assertTrue(humiditySensor.sensorType().equals("HumiditySensor"));
@@ -96,7 +119,9 @@ public class SensorTest {
     	assertTrue(windSpeedSensor.sensorType().equals("WindSpeedSensor"));
     	assertTrue(windDirectionSensor.sensorType().equals("WindDirectionSensor"));
     }
-    
+    /**
+	 * Test the output
+	 */
     @Test
     public void testCall() throws Exception {
     	// test case for humidity sensor call()
@@ -133,7 +158,9 @@ public class SensorTest {
     			|| direction.equals("NorthEast") || direction.equals("SouthEast") 
     			|| direction.equals("SouthWest") || direction.equals("NorthWest"));
     }
-    
+    /**
+	 * Test the output
+	 */
     @Test
     public void testRun() {
     	IntegratedSensorSuite iss = new IntegratedSensorSuite();
